@@ -39,7 +39,7 @@ jobs:
 
     - name: Build and Push
       run: |
-        IMAGE="${{ env.AR_HOSTNAME }}/${{ env.PROJECT_ID }}/${{ env.AR_REPOSITORY }}/app"
+        IMAGE="${{ env.AR_HOSTNAME }}/${{ env.PROJECT_ID }}/${{ env.AR_REPOSITORY }}/frontend"
         TAG="${GITHUB_REF_NAME:-latest}"
         docker build -t $IMAGE:$TAG -t $IMAGE:latest .
         docker push $IMAGE:$TAG
