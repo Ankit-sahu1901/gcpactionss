@@ -2,6 +2,9 @@ name: Build-Push Docker Image
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -37,6 +40,7 @@ jobs:
     - name: Build and Push
       run: |
         IMAGE="${{ env.AR_HOSTNAME }}/${{ env.PROJECT_ID }}/${{ env.AR_REPOSITORY }}/app"
-        docker build -t $IMAGE:${{ github.sha }} -t $IMAGE:latest .
-        docker push $IMAGE:${{ github.sha }}
+        TAG="${GITHUB_REF_NAME:-latest}"
+        docker build -t $IMAGE:$TAG -t $IMAGE:latest .
+        docker push $IMAGE:$TAG
         docker push $IMAGE:latest
